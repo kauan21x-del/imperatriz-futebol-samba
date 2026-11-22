@@ -1,0 +1,156 @@
+/* ==========================================
+   IMPERATRIZ FUTEBOL E SAMBA - ESTILOS GERAIS
+   ========================================== */
+
+:root {
+  --bg-page: #F8F9FA;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F3F4F6;
+  --text-main: #141416;
+  --text-muted: #4B5563;
+  --border-subtle: #E5E7EB;
+  --accent-primary: #C8102E;
+  --accent-secondary: #8E0B20;
+  --accent-highlight: #E61938;
+}
+
+html[data-theme="dark"] {
+  --bg-page: #0D0E11;
+  --bg-surface: #16181D;
+  --bg-subtle: #1F2229;
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --border-subtle: #2A2E37;
+  --accent-primary: #E11D48;
+  --accent-secondary: #881337;
+  --accent-highlight: #FB7185;
+}
+
+html[data-theme="samba"] {
+  --bg-page: #14090B;
+  --bg-surface: #200E12;
+  --bg-subtle: #2C1318;
+  --text-main: #FFFBEB;
+  --text-muted: #E5C185;
+  --border-subtle: #4A1C24;
+  --accent-primary: #A61128;
+  --accent-secondary: #5C0714;
+  --accent-highlight: #FBBF24;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+}
+
+/* Fundo em listras verticais estilo uniforme */
+.jersey-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(200, 16, 46, 0.08) 0px,
+    rgba(200, 16, 46, 0.08) 44px,
+    rgba(255, 255, 255, 0.7) 44px,
+    rgba(255, 255, 255, 0.7) 88px
+  );
+}
+
+/* Padrão diagonal sutil nas seções */
+.diagonal-pattern {
+  background-color: var(--bg-page);
+  background-image: radial-gradient(rgba(200, 16, 46, 0.09) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Gradiente sobre a capa (Hero) */
+.hero-overlay {
+  background: linear-gradient(
+    115deg,
+    rgba(142, 11, 32, 0.94) 0%,
+    rgba(200, 16, 46, 0.88) 52%,
+    rgba(20, 20, 22, 0.82) 100%
+  );
+}
+
+/* Efeito de elevação nos cartões */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -10px rgba(142, 11, 32, 0.22);
+}
+
+/* Moldura da foto nos cartões do elenco */
+.player-photo-frame {
+  background: linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 100%);
+}
+
+/* Adaptações das paletas Dark e Vinho & Ouro */
+html[data-theme="dark"] header,
+html[data-theme="samba"] header {
+  background-color: rgba(22, 24, 29, 0.95) !important;
+  border-bottom-color: var(--accent-primary) !important;
+}
+
+html[data-theme="samba"] header {
+  background-color: rgba(32, 14, 18, 0.95) !important;
+}
+
+html[data-theme="dark"] header a,
+html[data-theme="samba"] header a {
+  color: var(--text-main);
+}
+
+html[data-theme="dark"] .bg-white,
+html[data-theme="samba"] .bg-white {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+html[data-theme="dark"] .bg-gray-50,
+html[data-theme="dark"] .bg-gray-100,
+html[data-theme="samba"] .bg-gray-50,
+html[data-theme="samba"] .bg-gray-100 {
+  background-color: var(--bg-subtle) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+html[data-theme="dark"] .text-gray-900,
+html[data-theme="dark"] .text-gray-800,
+html[data-theme="dark"] .text-gray-700,
+html[data-theme="samba"] .text-gray-900,
+html[data-theme="samba"] .text-gray-800,
+html[data-theme="samba"] .text-gray-700 {
+  color: var(--text-main) !important;
+}
+
+html[data-theme="dark"] .text-gray-600,
+html[data-theme="dark"] .text-gray-500,
+html[data-theme="dark"] .text-gray-400,
+html[data-theme="samba"] .text-gray-600,
+html[data-theme="samba"] .text-gray-500,
+html[data-theme="samba"] .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="samba"] input,
+html[data-theme="samba"] select {
+  background-color: var(--bg-subtle) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+html[data-theme="dark"] .player-photo-frame,
+html[data-theme="samba"] .player-photo-frame {
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--bg-surface) 100%);
+}
+
+html[data-theme="samba"] #btn-toggle-theme {
+  border-color: #FBBF24 !important;
+  color: #FDE68A !important;
+}

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperatriz Futebol Samba | Site Oficial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            imperatriz: {
+              red: '#C8102E',
+              darkRed: '#8E0B20',
+              crimson: '#E61938',
+              offWhite: '#F8F9FA',
+              charcoal: '#141416'
+            }
+          },
+          fontFamily: {
+            display: ['Oswald', 'sans-serif'],
+            sans: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-imperatriz-offWhite text-imperatriz-charcoal font-sans antialiased">
+
+  <!-- [SEÇÃO: BARRA SUPERIOR] -->
+  <div class="bg-imperatriz-darkRed text-white text-xs py-2 px-4 border-b border-white/15">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2 font-semibold tracking-wider uppercase">
+        <span class="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        <span>Temporada 2026 • Orgulho em Vermelho e Branco</span>
+      </div>
+      <div class="flex items-center gap-4 text-white/90">
+        <a href="#amistosos" class="hover:text-white underline underline-offset-2 transition">Agendar Amistoso</a>
+        <span>|</span>
+        <span class="font-bold">Sede: Complexo Esportivo Vila Crett</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- [SEÇÃO: CABEÇALHO, ESCUDO DINÂMICO E PALETA] -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b-4 border-imperatriz-red">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <div class="flex items-center gap-3">
+          <a href="#inicio" id="header-logo-container" class="w-12 h-12 flex items-center justify-center transition-transform duration-300 hover:scale-105 group">
+            <svg viewBox="0 0 120 140" class="w-full h-full drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18 L60 6 L110 18 L110 72 C110 105 60 132 60 132 C60 132 10 105 10 72 Z" fill="#FFFFFF" stroke="#C8102E" stroke-width="6"/>
+              <path d="M18 24 L60 14 L102 24 L102 70 C102 98 60 122 60 122 C60 122 18 98 18 70 Z" fill="#C8102E"/>
+              <path d="M40 24 L52 24 L52 117 C47 113 43 109 40 105 Z" fill="#FFFFFF"/>
+              <path d="M68 24 L80 24 L80 105 C77 109 73 113 68 117 Z" fill="#FFFFFF"/>
+              <path d="M42 46 L48 34 L60 43 L72 34 L78 46 Z" fill="#FFFFFF" stroke="#8E0B20" stroke-width="2"/>
+              <circle cx="60" cy="76" r="21" fill="#8E0B20" stroke="#FFFFFF" stroke-width="3"/>
+              <text x="60" y="83" text-anchor="middle" fill="#FFFFFF" font-family="Oswald, sans-serif" font-weight="700" font-size="21" letter-spacing="1">IFC</text>
+            </svg>
+          </a>
+          <div>
+            <a href="#inicio" class="block font-display text-2xl font-bold tracking-wider text-imperatriz-red uppercase leading-none">IMPERATRIZ</a>
+            <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
+              <span class="text-[11px] font-bold tracking-[0.25em] text-gray-500 uppercase">Futebol Samba</span>
+              <button type="button" onclick="triggerLogoUpload()" id="btn-change-logo" class="text-[10px] font-extrabold uppercase tracking-wider bg-red-50 hover:bg-imperatriz-red text-imperatriz-red hover:text-white border border-red-200 px-2 py-0.5 rounded transition">
+                🛡️ Trocar Escudo
+              </button>
+              <button type="button" onclick="cycleThemePalette()" id="btn-toggle-theme" class="text-[10px] font-extrabold uppercase tracking-wider bg-gray-100 hover:bg-gray-900 text-gray-800 hover:text-white border border-gray-200 px-2 py-0.5 rounded transition" title="Alternar paleta de cores">
+                🎨 Paleta: Clássica
+              </button>
+            </div>
+          </div>
+          <input type="file" id="club-logo-input" accept="image/*" class="hidden">
+        </div>
+
+        <nav class="hidden md:flex items-center gap-7 font-bold text-sm uppercase tracking-wider text-gray-700">
+          <a href="#inicio" class="hover:text-imperatriz-red transition">Início</a>
+          <a href="#jogos" class="hover:text-imperatriz-red transition">Jogos & Resultados</a>
+          <a href="#elenco" class="hover:text-imperatriz-red transition">Elenco & Fotos</a>
+          <a href="#galeria" class="hover:text-imperatriz-red transition">Galeria</a>
+          <a href="#clube" class="hover:text-imperatriz-red transition">O Clube</a>
+          <a href="#amistosos" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-5 py-2.5 rounded-md shadow-sm transition">
+            Marcar Jogo
+          </a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-imperatriz-red hover:bg-red-50 focus:outline-none" aria-label="Abrir Menu">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-3 pb-5 space-y-2 shadow-lg">
+      <a href="#inicio" class="block py-2 px-3 rounded font-bold text-sm uppercase text-gray-800 hover:bg-red-50 hover:text-imperatriz-red">Início</a>
+      <a href="#jogos" class="block py-2 px-3 rounded font-bold text-sm uppercase text-gray-800 hover:bg-red-50 hover:text-imperatriz-red">Jogos & Resultados</a>
+      <a href="#elenco" class="block py-2 px-3 rounded font-bold text-sm uppercase text-gray-800 hover:bg-red-50 hover:text-imperatriz-red">Elenco & Fotos</a>
+      <a href="#galeria" class="block py-2 px-3 rounded font-bold text-sm uppercase text-gray-800 hover:bg-red-50 hover:text-imperatriz-red">Galeria</a>
+      <a href="#clube" class="block py-2 px-3 rounded font-bold text-sm uppercase text-gray-800 hover:bg-red-50 hover:text-imperatriz-red">O Clube</a>
+      <a href="#amistosos" class="block py-2.5 px-3 rounded font-bold text-sm uppercase text-center bg-imperatriz-red text-white">Marcar Amistoso</a>
+    </div>
+  </header>
+
+  <!-- [SEÇÃO: CAPA / HERO + CARTÃO PRÓXIMO CONFRONTO] -->
+  <section id="inicio" class="relative overflow-hidden text-white">
+    <div class="absolute inset-0 jersey-stripes opacity-25"></div>
+    <div class="absolute inset-0 hero-overlay"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-white"></span>
+            Raça, Tradição e Glória
+          </div>
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] tracking-tight">
+            A Força do <br>
+            <span class="text-white underline decoration-4 underline-offset-8">Imperatriz</span> <br>
+            Dentro de Campo
+          </h1>
+          <p class="text-white/90 text-base sm:text-lg max-w-xl leading-relaxed font-medium">
+            Vestimos o manto vermelho e branco com honra em cada dividida. Acompanhe nossa tabela, conheça o elenco e desafie o Imperatriz para um amistoso.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#elenco" class="bg-white text-imperatriz-red hover:bg-gray-100 font-extrabold uppercase tracking-wider text-sm px-7 py-4 rounded-md shadow-lg transition">
+              Elenco & Fotos
+            </a>
+            <a href="#galeria" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-imperatriz-red font-extrabold uppercase tracking-wider text-sm px-7 py-4 rounded-md transition">
+              Ver Galeria
+            </a>
+          </div>
+        </div>
+
+        <!-- [CARD PRÓXIMO CONFRONTO DINÂMICO] -->
+        <div class="lg:col-span-5">
+          <div class="bg-white text-imperatriz-charcoal rounded-2xl shadow-2xl overflow-hidden border-t-8 border-imperatriz-red">
+            <div class="bg-gray-900 text-white px-6 py-3 flex justify-between items-center text-xs font-bold uppercase tracking-wider">
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-imperatriz-crimson animate-ping"></span>
+                Próximo Confronto
+              </span>
+              <span id="hero-match-competition" class="text-red-400">Temporada 2026</span>
+            </div>
+
+            <div class="p-6 sm:p-8">
+              <div class="flex items-center justify-between gap-4 my-4">
+                <div class="flex-1 text-center">
+                  <div id="match-logo-container" class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-red-50 rounded-full p-2 border-2 border-imperatriz-red overflow-hidden">
+                    <svg viewBox="0 0 120 140" class="w-14 h-14" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 18 L60 6 L110 18 L110 72 C110 105 60 132 60 132 C60 132 10 105 10 72 Z" fill="#FFFFFF" stroke="#C8102E" stroke-width="6"/>
+                      <path d="M18 24 L60 14 L102 24 L102 70 C102 98 60 122 60 122 C60 122 18 98 18 70 Z" fill="#C8102E"/>
+                      <path d="M40 24 L52 24 L52 117 C47 113 43 109 40 105 Z" fill="#FFFFFF"/>
+                      <path d="M68 24 L80 24 L80 105 C77 109 73 113 68 117 Z" fill="#FFFFFF"/>
+                      <circle cx="60" cy="76" r="21" fill="#8E0B20" stroke="#FFFFFF" stroke-width="3"/>
+                      <text x="60" y="83" text-anchor="middle" fill="#FFFFFF" font-family="Oswald, sans-serif" font-weight="700" font-size="21">IFC</text>
+                    </svg>
+                  </div>
+                  <h3 class="font-display text-xl font-bold uppercase text-imperatriz-red">Imperatriz Futebol e Samba</h3>
+                  <span id="hero-imperatriz-role" class="text-xs font-semibold text-gray-500 uppercase">Mandante</span>
+                </div>
+
+                <div class="text-center px-2">
+                  <span class="block font-display text-3xl font-black text-gray-300">VS</span>
+                  <span id="hero-match-weekday" class="inline-block mt-1 bg-imperatriz-red text-white text-[11px] font-bold px-2.5 py-0.5 rounded uppercase">Em Breve</span>
+                </div>
+
+                <div class="flex-1 text-center">
+                  <div id="hero-opponent-logo-container" class="w-20 h-20 mx-auto mb-3 flex items-center justify-center bg-gray-100 rounded-full p-2 border-2 border-gray-300 overflow-hidden">
+                    <div id="hero-opponent-initials" class="w-12 h-12 rounded-full bg-gray-800 text-white flex items-center justify-center font-display font-bold text-lg">ADV</div>
+                  </div>
+                  <h3 id="hero-opponent-name" class="font-display text-xl font-bold uppercase text-gray-800">A Definir</h3>
+                  <span id="hero-opponent-role" class="text-xs font-semibold text-gray-500 uppercase">Visitante</span>
+                </div>
+              </div>
+
+              <div class="bg-gray-50 rounded-xl p-4 mt-6 border border-gray-200 text-center">
+                <p class="text-[11px] font-bold uppercase tracking-widest text-gray-500 mb-2">Faltam para o apito inicial</p>
+                <div id="countdown" class="grid grid-cols-4 gap-2 font-display">
+                  <div class="bg-white rounded-lg py-2 shadow-sm border border-gray-100">
+                    <span id="cd-days" class="block text-2xl font-bold text-imperatriz-red">00</span>
+                    <span class="text-[10px] font-sans font-bold uppercase text-gray-400">Dias</span>
+                  </div>
+                  <div class="bg-white rounded-lg py-2 shadow-sm border border-gray-100">
+                    <span id="cd-hours" class="block text-2xl font-bold text-imperatriz-red">00</span>
+                    <span class="text-[10px] font-sans font-bold uppercase text-gray-400">Horas</span>
+                  </div>
+                  <div class="bg-white rounded-lg py-2 shadow-sm border border-gray-100">
+                    <span id="cd-mins" class="block text-2xl font-bold text-imperatriz-red">00</span>
+                    <span class="text-[10px] font-sans font-bold uppercase text-gray-400">Min</span>
+                  </div>
+                  <div class="bg-white rounded-lg py-2 shadow-sm border border-gray-100">
+                    <span id="cd-secs" class="block text-2xl font-bold text-imperatriz-red">00</span>
+                    <span class="text-[10px] font-sans font-bold uppercase text-gray-400">Seg</span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-gray-200 flex items-center justify-center gap-2 text-xs font-bold text-gray-600">
+                  <span id="hero-match-venue">📍 Cadastre o próximo jogo na tabela abaixo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: ESTATÍSTICAS DA TEMPORADA] -->
+  <section class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-gray-100">
+        <div>
+          <span id="stat-games" class="block font-display text-4xl font-bold text-imperatriz-red">0</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Jogos Finalizados</span>
+        </div>
+        <div>
+          <span id="stat-wins" class="block font-display text-4xl font-bold text-imperatriz-red">0</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Vitórias Conquistadas</span>
+        </div>
+        <div>
+          <span id="stat-goals" class="block font-display text-4xl font-bold text-imperatriz-red">0</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Gols Marcados</span>
+        </div>
+        <div>
+          <span id="stat-rate" class="block font-display text-4xl font-bold text-imperatriz-red">0%</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Aproveitamento</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: JOGOS & RESULTADOS] -->
+  <section id="jogos" class="py-16 md:py-20 diagonal-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+          <span class="text-imperatriz-red font-extrabold text-xs uppercase tracking-[0.2em]">Calendário Oficial</span>
+          <h2 class="font-display text-4xl font-bold uppercase text-gray-900 mt-1">Jogos & Resultados</h2>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="inline-flex rounded-lg bg-white p-1 shadow-sm border border-gray-200">
+            <button onclick="switchMatchTab('proximos')" id="tab-proximos" class="px-5 py-2 rounded-md text-xs font-extrabold uppercase tracking-wider bg-imperatriz-red text-white transition">
+              Próximos Jogos
+            </button>
+            <button onclick="switchMatchTab('resultados')" id="tab-resultados" class="px-5 py-2 rounded-md text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:text-imperatriz-red transition">
+              Últimos Resultados
+            </button>
+          </div>
+
+          <button type="button" onclick="openMatchArtModal()" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white font-extrabold text-xs uppercase tracking-wider px-4 py-3 rounded-lg shadow-sm transition">
+            🎨 Criar Arte de Jogo
+          </button>
+
+          <button type="button" onclick="openMatchModal()" class="bg-gray-900 hover:bg-imperatriz-red text-white font-extrabold text-xs uppercase tracking-wider px-4 py-3 rounded-lg shadow-sm transition">
+            ⚽ + Novo Jogo / Placar
+          </button>
+        </div>
+      </div>
+
+      <!-- [ARTE OFICIAL DE DIA DE JOGO] -->
+      <div class="mb-8 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden grid md:grid-cols-12 items-center">
+        <div class="md:col-span-5 bg-imperatriz-charcoal flex items-center justify-center p-4">
+          <img src="./arte-dia-de-jogo.jpg" alt="Arte de Dia de Jogo - Imperatriz da Vila Crett" class="w-full max-w-[340px] rounded-xl object-contain shadow-lg">
+        </div>
+        <div class="md:col-span-7 p-6 sm:p-8 space-y-3">
+          <span class="inline-block bg-red-50 text-imperatriz-red text-[11px] font-extrabold uppercase tracking-widest px-3 py-1 rounded">
+            Arte Oficial do Clube
+          </span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold uppercase text-gray-900">
+            Imperatriz da Vila Crett • Futebol & Samba
+          </h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Composição oficial com o escudo, coroa e ramos dourados, mascotes e bandeiras para divulgar os confrontos do time nas redes e no WhatsApp.
+          </p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a href="./arte-dia-de-jogo.jpg" download="imperatriz-dia-de-jogo.jpg" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-lg transition">
+              ⬇️ Baixar Arte
+            </a>
+            <button type="button" onclick="openMatchArtModal()" class="bg-gray-900 hover:bg-gray-800 text-white text-xs font-extrabold uppercase tracking-wider px-4 py-2.5 rounded-lg transition">
+              🎨 Personalizar no Criador
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-proximos" class="grid md:grid-cols-3 gap-6"></div>
+      <div id="panel-resultados" class="hidden grid md:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: ELENCO PRINCIPAL] -->
+  <section id="elenco" class="py-16 md:py-20 bg-white border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
+        <div>
+          <span class="text-imperatriz-red font-extrabold text-xs uppercase tracking-[0.2em]">Do Goleiro ao Ataque</span>
+          <h2 class="font-display text-4xl font-bold uppercase text-gray-900 mt-1">Elenco Principal & Fotos</h2>
+          <p class="text-sm text-gray-500 mt-1">As fotos enviadas são salvas automaticamente no banco de dados do Imperatriz Futebol e Samba.</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button onclick="openPlayerModal('add')" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-lg shadow-md flex items-center gap-2 transition">
+            <span>📸 + Adicionar Jogador e Foto</span>
+          </button>
+          <button onclick="openPlayerModal('update')" class="bg-gray-900 hover:bg-gray-800 text-white font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-lg shadow-sm flex items-center gap-2 transition">
+            <span>🔄 Atualizar Foto Existente</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button onclick="filterPlayers('todos')" data-filter="todos" class="filter-btn active px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-imperatriz-red text-white transition">Todos</button>
+        <button onclick="filterPlayers('Goleiro')" data-filter="Goleiro" class="filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-imperatriz-red transition">Goleiros</button>
+        <button onclick="filterPlayers('Defensor')" data-filter="Defensor" class="filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-imperatriz-red transition">Defensores</button>
+        <button onclick="filterPlayers('Meio-Campo')" data-filter="Meio-Campo" class="filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-imperatriz-red transition">Meio-Campistas</button>
+        <button onclick="filterPlayers('Atacante')" data-filter="Atacante" class="filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-imperatriz-red transition">Atacantes</button>
+        <button onclick="filterPlayers('Comissão Tecnica')" data-filter="Comissão Tecnica" class="filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gray-100 text-gray-700 hover:bg-red-50 hover:text-imperatriz-red transition">Comissão Tecnica</button>
+      </div>
+
+      <input type="file" id="quick-player-photo-input" accept="image/*" class="hidden">
+
+      <div id="players-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: GALERIA DE FOTOS] -->
+  <section id="galeria" class="py-16 md:py-20 diagonal-pattern border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+        <div>
+          <span class="text-imperatriz-red font-extrabold text-xs uppercase tracking-[0.2em]">Registros em Campo</span>
+          <h2 class="font-display text-4xl font-bold uppercase text-gray-900 mt-1">Galeria do Imperatriz</h2>
+          <p class="text-sm text-gray-600 mt-2 max-w-xl">
+            Espaço reservado para os melhores momentos da equipe, torcida e bastidores.
+          </p>
+        </div>
+
+        <div>
+          <label for="photo-upload-input" id="gallery-upload-label" class="cursor-pointer inline-flex items-center gap-2 bg-imperatriz-red hover:bg-imperatriz-darkRed text-white font-extrabold text-xs uppercase tracking-wider px-5 py-3 rounded-lg shadow-md transition">
+            <span>📸 Adicionar Foto do Time</span>
+          </label>
+          <input id="photo-upload-input" type="file" accept="image/*" multiple class="hidden">
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterGallery('todas')" data-gal-filter="todas" class="gal-filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-imperatriz-red text-white transition">Todas</button>
+          <button onclick="filterGallery('Jogos')" data-gal-filter="Jogos" class="gal-filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white text-gray-700 border border-gray-200 hover:border-imperatriz-red hover:text-imperatriz-red transition">Jogos</button>
+          <button onclick="filterGallery('Torcida')" data-gal-filter="Torcida" class="gal-filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white text-gray-700 border border-gray-200 hover:border-imperatriz-red hover:text-imperatriz-red transition">Torcida</button>
+          <button onclick="filterGallery('Bastidores')" data-gal-filter="Bastidores" class="gal-filter-btn px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white text-gray-700 border border-gray-200 hover:border-imperatriz-red hover:text-imperatriz-red transition">Bastidores & Treinos</button>
+        </div>
+
+        <label class="inline-flex items-center gap-2 text-xs font-bold text-gray-600 cursor-pointer select-none bg-white px-3.5 py-2 rounded-full border border-gray-200">
+          <input type="checkbox" id="show-gallery-placeholders" checked onchange="toggleGalleryPlaceholders()" class="accent-imperatriz-red rounded">
+          <span>Mostrar espaços reservados</span>
+        </label>
+      </div>
+
+      <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- [MODAL 1: ADICIONAR / ATUALIZAR FOTO DO JOGADOR] -->
+  <div id="player-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border-t-8 border-imperatriz-red">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 id="player-modal-title" class="font-display text-2xl font-bold uppercase text-gray-900">Adicionar Jogador e Foto</h3>
+        <button onclick="closePlayerModal()" class="text-gray-400 hover:text-imperatriz-red text-2xl font-bold leading-none">×</button>
+      </div>
+
+      <form id="player-photo-form" class="p-6 space-y-4">
+        <div id="existing-player-select-wrap" class="hidden">
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Selecione o Jogador</label>
+          <select id="existing-player-select" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold"></select>
+        </div>
+
+        <div id="new-player-fields" class="space-y-4">
+          <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Nome do Jogador *</label>
+              <input type="text" id="modal-player-name" placeholder="Ex: Gustavo Lima" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Camisa *</label>
+              <input type="number" id="modal-player-number" min="0" max="99" placeholder="14" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Setor / Posição *</label>
+              <select id="modal-player-position" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold">
+                <option value="Goleiro">Goleiro</option>
+                <option value="Defensor">Defensor</option>
+                <option value="Meio-Campo">Meio-Campo</option>
+                <option value="Atacante">Atacante</option>
+                <option value="Comissão Tecnica">Comissão Tecnica</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Função Específica</label>
+              <input type="text" id="modal-player-role" placeholder="Ex: Centroavante, Zagueiro" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Foto do Atleta *</label>
+          <label for="modal-player-photo-file" class="cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-red-300 hover:border-imperatriz-red bg-red-50/40 rounded-xl p-5 text-center transition">
+            <img id="modal-photo-preview" src="" alt="Prévia" class="hidden w-28 h-28 object-cover rounded-xl border-2 border-imperatriz-red mb-2 shadow">
+            <span id="modal-photo-placeholder" class="text-sm font-bold text-imperatriz-red">📷 Clique para escolher a foto do celular ou PC</span>
+            <span class="text-[11px] text-gray-500 mt-1">Formatos JPG, PNG ou WEBP</span>
+          </label>
+          <input type="file" id="modal-player-photo-file" accept="image/*" class="hidden">
+        </div>
+
+        <div class="flex justify-end gap-3 pt-3 border-t border-gray-100">
+          <button type="button" onclick="closePlayerModal()" class="px-5 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+          <button type="submit" id="modal-submit-btn" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-6 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider shadow-md transition">
+            Salvar no Banco
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- [MODAL 2: EDITAR / EXCLUIR ATLETA] -->
+  <div id="edit-player-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border-t-8 border-imperatriz-red">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 class="font-display text-2xl font-bold uppercase text-gray-900">Editar ou Excluir Atleta</h3>
+        <button type="button" onclick="closeEditPlayerModal()" class="text-gray-400 hover:text-imperatriz-red text-2xl font-bold leading-none">×</button>
+      </div>
+
+      <form id="edit-player-form" class="p-6 space-y-4">
+        <input type="hidden" id="edit-player-id">
+
+        <div class="grid grid-cols-3 gap-3">
+          <div class="col-span-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Nome do Jogador *</label>
+            <input type="text" id="edit-player-name" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Camisa *</label>
+            <input type="number" id="edit-player-number" min="0" max="99" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Setor / Posição *</label>
+            <select id="edit-player-position" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold">
+              <option value="Goleiro">Goleiro</option>
+              <option value="Defensor">Defensor</option>
+              <option value="Meio-Campo">Meio-Campo</option>
+              <option value="Atacante">Atacante</option>
+              <option value="Comissão Tecnica">Comissão Tecnica</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Função Específica</label>
+            <input type="text" id="edit-player-role" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Jogos</label>
+            <input type="number" id="edit-player-games" min="0" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold">
+          </div>
+          <div>
+            <label id="edit-player-goals-label" class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Gols</label>
+            <input type="number" id="edit-player-goals" min="0" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Nova Foto (opcional)</label>
+          <input type="file" id="edit-player-photo-file" accept="image/*" class="block w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:uppercase file:bg-red-50 file:text-imperatriz-red hover:file:bg-red-100">
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-100">
+          <button type="button" id="delete-player-btn" onclick="deletePlayerFromDB()" class="bg-red-50 hover:bg-red-600 text-red-700 hover:text-white border border-red-200 px-4 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider transition">
+            🗑️ Excluir Atleta
+          </button>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="closeEditPlayerModal()" class="px-4 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+            <button type="submit" id="edit-player-submit-btn" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-5 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider shadow-md transition">
+              Salvar Alterações
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- [MODAL 3: ADICIONAR / EDITAR JOGO + ESCUDO DO ADVERSÁRIO] -->
+  <div id="match-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl border-t-8 border-imperatriz-red">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 id="match-modal-title" class="font-display text-2xl font-bold uppercase text-gray-900">Cadastrar Jogo</h3>
+        <button type="button" onclick="closeMatchModal()" class="text-gray-400 hover:text-imperatriz-red text-2xl font-bold leading-none">×</button>
+      </div>
+
+      <form id="match-form" class="p-6 space-y-4">
+        <input type="hidden" id="match-id">
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Adversário *</label>
+            <input type="text" id="match-opponent" required placeholder="Ex: Real Atlético" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Competição</label>
+            <input type="text" id="match-competition" placeholder="Ex: Copa Regional" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Data *</label>
+            <input type="date" id="match-form-date" required class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Horário</label>
+            <input type="text" id="match-form-time" value="10:00" placeholder="10:00" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Mando</label>
+            <select id="match-is-home" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold">
+              <option value="true">Em Casa</option>
+              <option value="false">Fora</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Local / Campo</label>
+            <input type="text" id="match-form-location" value="Complexo Esportivo Vila Crett" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Status</label>
+            <select id="match-status" onchange="toggleScoreFields()" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold">
+              <option value="proximos">Próximo Jogo</option>
+              <option value="resultados">Jogo Finalizado (Placar)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Escudo do Adversário (opcional)</label>
+          <input type="file" id="match-opponent-logo-file" accept="image/*" class="block w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-extrabold file:uppercase file:bg-red-50 file:text-imperatriz-red hover:file:bg-red-100">
+        </div>
+
+        <div id="match-score-fields" class="hidden space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Gols Imperatriz</label>
+              <input type="number" id="match-goals-for" min="0" value="0" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Gols Adversário</label>
+              <input type="number" id="match-goals-against" min="0" value="0" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Autores dos Gols</label>
+            <input type="text" id="match-scorers" placeholder="Ex: Rafael (2), Lucas M." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+          <button type="button" onclick="closeMatchModal()" class="px-4 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+          <button type="submit" id="match-submit-btn" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-5 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider shadow-md transition">Salvar Jogo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- [MODAL 3C: CRIADOR DE ARTE DO JOGO] -->
+  <div id="match-art-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl border-t-8 border-imperatriz-red my-auto">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 class="font-display text-2xl font-bold uppercase text-gray-900">Criador de Arte de Jogo</h3>
+        <button type="button" onclick="closeMatchArtModal()" class="text-gray-400 hover:text-imperatriz-red text-2xl font-bold leading-none">×</button>
+      </div>
+
+      <div class="p-6 grid lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-5 space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Escolher Jogo Cadastrado</label>
+            <select id="art-match-select" onchange="loadSelectedMatchIntoArt()" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold bg-white"></select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Tipo de Arte</label>
+              <select id="art-mode" onchange="renderMatchArtCanvas()" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-xs font-semibold bg-white">
+                <option value="proximo">Dia de Jogo</option>
+                <option value="resultado">Resultado Final</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Formato</label>
+              <select id="art-format" onchange="renderMatchArtCanvas()" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-xs font-semibold bg-white">
+                <option value="square">Feed / WhatsApp</option>
+                <option value="story">Stories (4:5)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Adversário</label>
+              <input type="text" id="art-opponent" oninput="renderMatchArtCanvas()" class="w-full px-3.5 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Competição</label>
+              <input type="text" id="art-competition" oninput="renderMatchArtCanvas()" class="w-full px-3.5 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Data & Hora</label>
+              <input type="text" id="art-datetime" oninput="renderMatchArtCanvas()" placeholder="22/11 • 10:00" class="w-full px-3.5 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Local</label>
+              <input type="text" id="art-location" oninput="renderMatchArtCanvas()" class="w-full px-3.5 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+            </div>
+          </div>
+
+          <div id="art-score-box" class="hidden grid grid-cols-2 gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Gols Imperatriz</label>
+              <input type="number" id="art-goals-for" min="0" value="0" oninput="renderMatchArtCanvas()" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Gols Adversário</label>
+              <input type="number" id="art-goals-against" min="0" value="0" oninput="renderMatchArtCanvas()" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-bold text-center">
+            </div>
+            <div class="col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Autores dos Gols (opcional)</label>
+              <input type="text" id="art-scorers" placeholder="Ex: Rafael (2), Lucas M." oninput="renderMatchArtCanvas()" class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-xs font-medium">
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <button type="button" onclick="downloadMatchArt()" class="flex-1 bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-4 py-3 rounded-lg text-xs font-extrabold uppercase tracking-wider shadow-md transition">
+              ⬇️ Baixar Imagem (PNG)
+            </button>
+            <button type="button" onclick="closeMatchArtModal()" class="px-4 py-3 rounded-lg text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:bg-gray-100 transition">
+              Fechar
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-gray-900 rounded-2xl p-4 flex items-center justify-center border border-gray-800">
+          <canvas id="match-art-canvas" width="1080" height="1080" class="w-full max-w-[440px] h-auto rounded-xl shadow-2xl bg-white"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [MODAL 3B: EDITAR FOTO DA GALERIA] -->
+  <div id="edit-gallery-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border-t-8 border-imperatriz-red">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 class="font-display text-2xl font-bold uppercase text-gray-900">Editar Foto</h3>
+        <button type="button" onclick="closeEditGalleryModal()" class="text-gray-400 hover:text-imperatriz-red text-2xl font-bold leading-none">×</button>
+      </div>
+
+      <form id="edit-gallery-form" class="p-6 space-y-4">
+        <input type="hidden" id="edit-gallery-id">
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Título / Legenda *</label>
+          <input type="text" id="edit-gallery-title" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Categoria</label>
+          <select id="edit-gallery-category" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-semibold">
+            <option value="Jogos">Jogos</option>
+            <option value="Torcida">Torcida</option>
+            <option value="Bastidores">Bastidores</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+          <button type="button" onclick="closeEditGalleryModal()" class="px-4 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider text-gray-600 hover:bg-gray-100 transition">Cancelar</button>
+          <button type="submit" id="edit-gallery-submit-btn" class="bg-imperatriz-red hover:bg-imperatriz-darkRed text-white px-5 py-2.5 rounded-lg text-xs font-extrabold uppercase tracking-wider shadow-md transition">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- [MODAL 4: LIGHTBOX GALERIA] -->
+  <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-5 right-6 text-white/80 hover:text-white text-4xl font-bold leading-none">×</button>
+    <button onclick="navigateLightbox(-1)" class="absolute left-4 sm:left-8 text-white/80 hover:text-white bg-white/10 hover:bg-imperatriz-red w-11 h-11 rounded-full flex items-center justify-center font-bold text-xl transition">❮</button>
+
+    <div class="max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl">
+      <div id="lightbox-media" class="bg-gray-900 flex items-center justify-center min-h-[300px] max-h-[70vh] overflow-hidden"></div>
+      <div class="p-5 flex flex-wrap justify-between items-center gap-3 bg-white">
+        <div>
+          <span id="lightbox-badge" class="inline-block bg-imperatriz-red text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded mb-1"></span>
+          <h3 id="lightbox-title" class="font-display text-2xl font-bold uppercase text-gray-900"></h3>
+        </div>
+        <span id="lightbox-date" class="text-xs font-bold text-gray-500 uppercase"></span>
+      </div>
+    </div>
+
+    <button onclick="navigateLightbox(1)" class="absolute right-4 sm:right-8 text-white/80 hover:text-white bg-white/10 hover:bg-imperatriz-red w-11 h-11 rounded-full flex items-center justify-center font-bold text-xl transition">❯</button>
+  </div>
+
+  <!-- [SEÇÃO: SOBRE O CLUBE] -->
+  <section id="clube" class="py-16 md:py-20 bg-imperatriz-charcoal text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <span class="text-imperatriz-crimson font-extrabold text-xs uppercase tracking-[0.2em]">Nossa História</span>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold uppercase leading-tight">
+            Mais que um Time, <br><span class="text-imperatriz-crimson">Uma Família em Campo</span>
+          </h2>
+          <p class="text-gray-300 leading-relaxed">
+            O <strong>Imperatriz Futebol e Samba</strong> nasceu da união de amigos apaixonados pelo futebol raiz, competitivo e leal. Com as cores vermelho e branco estampadas no peito, representamos a garra dentro das quatro linhas e o respeito fora delas.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 pt-2">
+            <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+              <h4 class="font-display text-lg font-bold uppercase text-white mb-1">🏆 Espírito Vencedor</h4>
+              <p class="text-xs text-gray-400 leading-relaxed">Comprometimento tático e entrega total do primeiro ao último minuto.</p>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
+              <h4 class="font-display text-lg font-bold uppercase text-white mb-1">🤝 Resenha & União</h4>
+              <p class="text-xs text-gray-400 leading-relaxed">Amizade fortalecida a cada treino, campeonato e confraternização.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-imperatriz-red to-imperatriz-darkRed p-8 sm:p-10 rounded-2xl shadow-2xl border border-white/15">
+          <div class="flex items-center justify-between border-b border-white/20 pb-5 mb-6">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-white/75">Manto Oficial 2026</span>
+              <h3 class="font-display text-2xl font-bold uppercase mt-0.5">Identidade Imperatriz</h3>
+            </div>
+            <span class="bg-white text-imperatriz-red font-display font-bold px-3 py-1 rounded text-sm">VERMELHO & BRANCO</span>
+          </div>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-center justify-between py-2 border-b border-white/10">
+              <span class="text-white/80">Uniforme 1 (Titular)</span>
+              <span class="font-bold">Camisa Vermelha, Calção Branco</span>
+            </li>
+            <li class="flex items-center justify-between py-2 border-b border-white/10">
+              <span class="text-white/80">Uniforme 2 (Reserva)</span>
+              <span class="font-bold">Camisa Vermelho e Branca e Calção Vermelho</span>
+            </li>
+            <li class="flex items-center justify-between py-2 border-b border-white/10">
+              <span class="text-white/80">Modalidade</span>
+              <span class="font-bold">Futebol de Campo</span>
+            </li>
+            <li class="flex items-center justify-between py-2">
+              <span class="text-white/80">Fundação</span>
+              <span class="font-bold">2012</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: MARCAR AMISTOSO] -->
+  <section id="amistosos" class="py-16 md:py-20 bg-imperatriz-offWhite">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 grid md:grid-cols-12">
+        <div class="md:col-span-5 bg-imperatriz-red text-white p-8 sm:p-10 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-widest text-white/80">Desafie o Imperatriz</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase mt-2 leading-tight">Marque um Amistoso</h2>
+            <p class="text-white/90 text-sm mt-4 leading-relaxed">
+              Tem um time e quer marcar um jogo contra o Imperatriz Futebol e Samba? Preencha os dados ao lado que registramos no sistema e abrimos o WhatsApp da diretoria.
+            </p>
+          </div>
+          <div class="space-y-3 mt-8 pt-6 border-t border-white/20 text-sm">
+            <p class="flex items-center gap-2 font-semibold">📱 WhatsApp: (11) 97028-5292</p>
+            <p class="flex items-center gap-2 font-semibold">📸 Instagram: @imperatrizfc.oficial</p>
+            <p class="flex items-center gap-2 font-semibold">📍 Complexo Esportivo Vila Crett</p>
+          </div>
+        </div>
+
+        <div class="md:col-span-7 p-8 sm:p-10">
+          <form id="friendly-form" class="space-y-5">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Nome do Seu Time *</label>
+              <input type="text" id="team-name" required placeholder="Ex: Esporte Clube União" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium transition">
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Responsável *</label>
+                <input type="text" id="contact-name" required placeholder="Seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium transition">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">WhatsApp *</label>
+                <input type="tel" id="contact-phone" required placeholder="(00) 00000-0000" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium transition">
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Data Sugerida *</label>
+                <input type="date" id="match-date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium transition">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Local do Jogo</label>
+                <select id="match-location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-imperatriz-red outline-none text-sm font-medium transition bg-white">
+                  <option value="Complexo Esportivo Vila Crett (Nosso Mando)">Complexo Esportivo Vila Crett (Nosso Mando)</option>
+                  <option value="Campo do Visitante (Seu Mando)">Campo do Visitante (Seu Mando)</option>
+                  <option value="Campo Neutro a Combinar">Campo Neutro a Combinar</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" id="friendly-submit-btn" class="w-full bg-imperatriz-red hover:bg-imperatriz-darkRed text-white font-extrabold uppercase tracking-wider text-sm py-4 rounded-lg shadow-md transition">
+              Enviar Convite e Abrir WhatsApp
+            </button>
+            <div id="form-feedback" class="hidden p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold space-y-2"></div>
+          </form>
+
+          <div id="friendly-list-wrap" class="hidden mt-8 pt-6 border-t border-gray-200">
+            <h3 class="font-display text-lg font-bold uppercase text-gray-900 mb-3">Convites Recebidos</h3>
+            <div id="friendly-list" class="space-y-2.5 text-xs"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [SEÇÃO: RODAPÉ] -->
+  <footer class="bg-imperatriz-charcoal text-white border-t-4 border-imperatriz-red py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-imperatriz-red flex items-center justify-center font-display font-bold text-sm border border-white">IMP</div>
+        <span class="font-display text-lg font-bold uppercase tracking-wider">Imperatriz Futebol e Samba</span>
+      </div>
+      <p class="text-xs text-gray-400 text-center">© 2026 Imperatriz Futebol e Samba • Vermelho e Branco com Orgulho.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
